@@ -1,16 +1,19 @@
-import React from 'react';
-import { WorkExperienceItem } from '../../../types/pds';
-import { createEmptyWorkExperience } from '../../../db/defaultPdsData';
-import { DateInput } from '../../../components/common/DateInput';
-import { Button } from '../../../components/common/Button';
-import { Plus, Trash2, Briefcase, FileText } from 'lucide-react';
+import React from "react";
+import { WorkExperienceItem } from "../../../types/pds";
+import { createEmptyWorkExperience } from "../../../db/defaultPdsData";
+import { DateInput } from "../../../components/common/DateInput";
+import { Button } from "../../../components/common/Button";
+import { Plus, Trash2, Briefcase, FileText } from "lucide-react";
 
 interface Section5WorkExperienceProps {
   data: WorkExperienceItem[];
   onChange: (updated: WorkExperienceItem[]) => void;
 }
 
-export const Section5WorkExperience: React.FC<Section5WorkExperienceProps> = ({ data, onChange }) => {
+export const Section5WorkExperience: React.FC<Section5WorkExperienceProps> = ({
+  data,
+  onChange,
+}) => {
   const addRow = () => {
     onChange([...data, createEmptyWorkExperience()]);
   };
@@ -24,7 +27,7 @@ export const Section5WorkExperience: React.FC<Section5WorkExperienceProps> = ({ 
   const updateRow = <K extends keyof WorkExperienceItem>(
     index: number,
     field: K,
-    val: WorkExperienceItem[K]
+    val: WorkExperienceItem[K],
   ) => {
     const list = [...data];
     list[index] = { ...list[index], [field]: val };
@@ -42,18 +45,10 @@ export const Section5WorkExperience: React.FC<Section5WorkExperienceProps> = ({ 
             Work Experience (Item 28)
           </h3>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-            Include all private and government employment starting from your most recent position.
+            Include all private and government employment starting from your
+            most recent position.
           </p>
         </div>
-        <Button
-          type="button"
-          variant="outline"
-          size="sm"
-          icon={<Plus className="w-3.5 h-3.5" />}
-          onClick={addRow}
-        >
-          Add Experience
-        </Button>
       </div>
 
       {data.length === 0 ? (
@@ -78,7 +73,7 @@ export const Section5WorkExperience: React.FC<Section5WorkExperienceProps> = ({ 
             >
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold text-teal-700 dark:text-teal-400">
-                  Position #{idx + 1} {idx === 0 && '(Latest / Current)'}
+                  Position #{idx + 1} {idx === 0 && "(Latest / Current)"}
                 </span>
                 {data.length > 1 && (
                   <button
@@ -100,7 +95,9 @@ export const Section5WorkExperience: React.FC<Section5WorkExperienceProps> = ({ 
                   <input
                     type="text"
                     value={item.positionTitle}
-                    onChange={(e) => updateRow(idx, 'positionTitle', e.target.value)}
+                    onChange={(e) =>
+                      updateRow(idx, "positionTitle", e.target.value)
+                    }
                     placeholder="e.g. ADMINISTRATIVE OFFICER V"
                     className="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 px-3 py-1.5 text-sm text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-teal-500/50 "
                   />
@@ -113,7 +110,13 @@ export const Section5WorkExperience: React.FC<Section5WorkExperienceProps> = ({ 
                   <input
                     type="text"
                     value={item.departmentAgencyOfficeCompany}
-                    onChange={(e) => updateRow(idx, 'departmentAgencyOfficeCompany', e.target.value)}
+                    onChange={(e) =>
+                      updateRow(
+                        idx,
+                        "departmentAgencyOfficeCompany",
+                        e.target.value,
+                      )
+                    }
                     placeholder="e.g. Department of Budget and Management"
                     className="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 px-3 py-1.5 text-sm text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-teal-500/50 "
                   />
@@ -125,7 +128,9 @@ export const Section5WorkExperience: React.FC<Section5WorkExperienceProps> = ({ 
                   <DateInput
                     label="Inclusive Date: From"
                     value={item.inclusiveDatesFrom}
-                    onChange={(val) => updateRow(idx, 'inclusiveDatesFrom', val)}
+                    onChange={(val) =>
+                      updateRow(idx, "inclusiveDatesFrom", val)
+                    }
                   />
                 </div>
 
@@ -133,7 +138,7 @@ export const Section5WorkExperience: React.FC<Section5WorkExperienceProps> = ({ 
                   <DateInput
                     label="Inclusive Date: To"
                     value={item.inclusiveDatesTo}
-                    onChange={(val) => updateRow(idx, 'inclusiveDatesTo', val)}
+                    onChange={(val) => updateRow(idx, "inclusiveDatesTo", val)}
                     placeholder="DD/MM/YYYY or PRESENT"
                   />
                 </div>
@@ -145,7 +150,9 @@ export const Section5WorkExperience: React.FC<Section5WorkExperienceProps> = ({ 
                   <input
                     type="text"
                     value={item.monthlySalary}
-                    onChange={(e) => updateRow(idx, 'monthlySalary', e.target.value)}
+                    onChange={(e) =>
+                      updateRow(idx, "monthlySalary", e.target.value)
+                    }
                     placeholder="e.g. 51,357.00"
                     className="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 px-3 py-2 text-sm text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-teal-500/50"
                   />
@@ -158,7 +165,13 @@ export const Section5WorkExperience: React.FC<Section5WorkExperienceProps> = ({ 
                   <input
                     type="text"
                     value={item.salaryJobPayGradeStepIncrement}
-                    onChange={(e) => updateRow(idx, 'salaryJobPayGradeStepIncrement', e.target.value)}
+                    onChange={(e) =>
+                      updateRow(
+                        idx,
+                        "salaryJobPayGradeStepIncrement",
+                        e.target.value,
+                      )
+                    }
                     placeholder="e.g. SG 18-1"
                     className="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 px-3 py-2 text-sm text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-teal-500/50 "
                   />
@@ -172,7 +185,9 @@ export const Section5WorkExperience: React.FC<Section5WorkExperienceProps> = ({ 
                   </label>
                   <select
                     value={item.statusOfAppointment}
-                    onChange={(e) => updateRow(idx, 'statusOfAppointment', e.target.value)}
+                    onChange={(e) =>
+                      updateRow(idx, "statusOfAppointment", e.target.value)
+                    }
                     className="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 px-3 py-1.5 text-sm text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-teal-500/50"
                   >
                     <option value="">Select Appointment Status</option>
@@ -196,7 +211,9 @@ export const Section5WorkExperience: React.FC<Section5WorkExperienceProps> = ({ 
                         type="radio"
                         name={`gov_${item.id || idx}`}
                         checked={item.isGovernmentService === true}
-                        onChange={() => updateRow(idx, 'isGovernmentService', true)}
+                        onChange={() =>
+                          updateRow(idx, "isGovernmentService", true)
+                        }
                         className="text-teal-600 focus:ring-teal-500"
                       />
                       <span>Yes (Government)</span>
@@ -207,7 +224,9 @@ export const Section5WorkExperience: React.FC<Section5WorkExperienceProps> = ({ 
                         type="radio"
                         name={`gov_${item.id || idx}`}
                         checked={item.isGovernmentService === false}
-                        onChange={() => updateRow(idx, 'isGovernmentService', false)}
+                        onChange={() =>
+                          updateRow(idx, "isGovernmentService", false)
+                        }
                         className="text-teal-600 focus:ring-teal-500"
                       />
                       <span>No (Private / NGO)</span>
@@ -224,8 +243,10 @@ export const Section5WorkExperience: React.FC<Section5WorkExperienceProps> = ({ 
                 </label>
                 <textarea
                   rows={2}
-                  value={item.dutiesDescription || ''}
-                  onChange={(e) => updateRow(idx, 'dutiesDescription', e.target.value)}
+                  value={item.dutiesDescription || ""}
+                  onChange={(e) =>
+                    updateRow(idx, "dutiesDescription", e.target.value)
+                  }
                   placeholder="Describe main responsibilities, supervisory scope, accomplishments..."
                   className="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 px-3 py-1.5 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-teal-500/50"
                 />
@@ -234,6 +255,16 @@ export const Section5WorkExperience: React.FC<Section5WorkExperienceProps> = ({ 
           ))}
         </div>
       )}
+
+      <Button
+        type="button"
+        variant="outline"
+        size="sm"
+        icon={<Plus className="w-3.5 h-3.5" />}
+        onClick={addRow}
+      >
+        Add Experience
+      </Button>
     </div>
   );
 };

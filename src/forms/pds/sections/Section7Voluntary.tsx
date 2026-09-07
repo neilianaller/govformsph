@@ -1,16 +1,19 @@
-import React from 'react';
-import { VoluntaryWorkItem } from '../../../types/pds';
-import { createEmptyVoluntaryWork } from '../../../db/defaultPdsData';
-import { DateInput } from '../../../components/common/DateInput';
-import { Button } from '../../../components/common/Button';
-import { Plus, Trash2, HeartHandshake } from 'lucide-react';
+import React from "react";
+import { VoluntaryWorkItem } from "../../../types/pds";
+import { createEmptyVoluntaryWork } from "../../../db/defaultPdsData";
+import { DateInput } from "../../../components/common/DateInput";
+import { Button } from "../../../components/common/Button";
+import { Plus, Trash2, HeartHandshake } from "lucide-react";
 
 interface Section7VoluntaryProps {
   data: VoluntaryWorkItem[];
   onChange: (updated: VoluntaryWorkItem[]) => void;
 }
 
-export const Section7Voluntary: React.FC<Section7VoluntaryProps> = ({ data, onChange }) => {
+export const Section7Voluntary: React.FC<Section7VoluntaryProps> = ({
+  data,
+  onChange,
+}) => {
   const addRow = () => {
     onChange([...data, createEmptyVoluntaryWork()]);
   };
@@ -21,7 +24,11 @@ export const Section7Voluntary: React.FC<Section7VoluntaryProps> = ({ data, onCh
     onChange(list);
   };
 
-  const updateRow = (index: number, field: keyof VoluntaryWorkItem, val: string) => {
+  const updateRow = (
+    index: number,
+    field: keyof VoluntaryWorkItem,
+    val: string,
+  ) => {
     const list = [...data];
     list[index] = { ...list[index], [field]: val };
     onChange(list);
@@ -41,15 +48,6 @@ export const Section7Voluntary: React.FC<Section7VoluntaryProps> = ({ data, onCh
             Non-profit, non-governmental, or community service engagements.
           </p>
         </div>
-        <Button
-          type="button"
-          variant="outline"
-          size="sm"
-          icon={<Plus className="w-3.5 h-3.5" />}
-          onClick={addRow}
-        >
-          Add Voluntary Work
-        </Button>
       </div>
 
       {data.length === 0 ? (
@@ -95,7 +93,9 @@ export const Section7Voluntary: React.FC<Section7VoluntaryProps> = ({ data, onCh
                 <input
                   type="text"
                   value={item.organizationNameAddress}
-                  onChange={(e) => updateRow(idx, 'organizationNameAddress', e.target.value)}
+                  onChange={(e) =>
+                    updateRow(idx, "organizationNameAddress", e.target.value)
+                  }
                   placeholder="e.g. Philippine Red Cross - Manila Chapter, Bonifacio Drive, Port Area"
                   className="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 px-3 py-1.5 text-sm text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-teal-500/50 "
                 />
@@ -106,7 +106,9 @@ export const Section7Voluntary: React.FC<Section7VoluntaryProps> = ({ data, onCh
                   <DateInput
                     label="Inclusive Date: From"
                     value={item.inclusiveDatesFrom}
-                    onChange={(val) => updateRow(idx, 'inclusiveDatesFrom', val)}
+                    onChange={(val) =>
+                      updateRow(idx, "inclusiveDatesFrom", val)
+                    }
                   />
                 </div>
 
@@ -114,7 +116,7 @@ export const Section7Voluntary: React.FC<Section7VoluntaryProps> = ({ data, onCh
                   <DateInput
                     label="Inclusive Date: To"
                     value={item.inclusiveDatesTo}
-                    onChange={(val) => updateRow(idx, 'inclusiveDatesTo', val)}
+                    onChange={(val) => updateRow(idx, "inclusiveDatesTo", val)}
                   />
                 </div>
 
@@ -125,7 +127,9 @@ export const Section7Voluntary: React.FC<Section7VoluntaryProps> = ({ data, onCh
                   <input
                     type="text"
                     value={item.numberOfHours}
-                    onChange={(e) => updateRow(idx, 'numberOfHours', e.target.value)}
+                    onChange={(e) =>
+                      updateRow(idx, "numberOfHours", e.target.value)
+                    }
                     placeholder="e.g. 120"
                     className="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 px-3 py-2 text-sm text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-teal-500/50"
                   />
@@ -139,7 +143,9 @@ export const Section7Voluntary: React.FC<Section7VoluntaryProps> = ({ data, onCh
                 <input
                   type="text"
                   value={item.positionNatureOfWork}
-                  onChange={(e) => updateRow(idx, 'positionNatureOfWork', e.target.value)}
+                  onChange={(e) =>
+                    updateRow(idx, "positionNatureOfWork", e.target.value)
+                  }
                   placeholder="e.g. Volunteer Disaster Relief Coordinator"
                   className="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 px-3 py-1.5 text-sm text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-teal-500/50 "
                 />
@@ -148,6 +154,16 @@ export const Section7Voluntary: React.FC<Section7VoluntaryProps> = ({ data, onCh
           ))}
         </div>
       )}
+
+      <Button
+        type="button"
+        variant="outline"
+        size="sm"
+        icon={<Plus className="w-3.5 h-3.5" />}
+        onClick={addRow}
+      >
+        Add Voluntary Work
+      </Button>
     </div>
   );
 };

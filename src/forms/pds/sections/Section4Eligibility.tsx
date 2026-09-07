@@ -1,16 +1,19 @@
-import React from 'react';
-import { EligibilityItem } from '../../../types/pds';
-import { createEmptyEligibility } from '../../../db/defaultPdsData';
-import { DateInput } from '../../../components/common/DateInput';
-import { Button } from '../../../components/common/Button';
-import { Plus, Trash2, Award } from 'lucide-react';
+import React from "react";
+import { EligibilityItem } from "../../../types/pds";
+import { createEmptyEligibility } from "../../../db/defaultPdsData";
+import { DateInput } from "../../../components/common/DateInput";
+import { Button } from "../../../components/common/Button";
+import { Plus, Trash2, Award } from "lucide-react";
 
 interface Section4EligibilityProps {
   data: EligibilityItem[];
   onChange: (updated: EligibilityItem[]) => void;
 }
 
-export const Section4Eligibility: React.FC<Section4EligibilityProps> = ({ data, onChange }) => {
+export const Section4Eligibility: React.FC<Section4EligibilityProps> = ({
+  data,
+  onChange,
+}) => {
   const addRow = () => {
     onChange([...data, createEmptyEligibility()]);
   };
@@ -21,7 +24,11 @@ export const Section4Eligibility: React.FC<Section4EligibilityProps> = ({ data, 
     onChange(list);
   };
 
-  const updateRow = (index: number, field: keyof EligibilityItem, val: string) => {
+  const updateRow = (
+    index: number,
+    field: keyof EligibilityItem,
+    val: string,
+  ) => {
     const list = [...data];
     list[index] = { ...list[index], [field]: val };
     onChange(list);
@@ -38,18 +45,10 @@ export const Section4Eligibility: React.FC<Section4EligibilityProps> = ({ data, 
             Civil Service Eligibility (Item 27)
           </h3>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-            Career Service, RA 1080 (Board/Bar), CES, CSEE, Barangay Health Worker, Driver's License, etc.
+            Career Service, RA 1080 (Board/Bar), CES, CSEE, Barangay Health
+            Worker, Driver's License, etc.
           </p>
         </div>
-        <Button
-          type="button"
-          variant="outline"
-          size="sm"
-          icon={<Plus className="w-3.5 h-3.5" />}
-          onClick={addRow}
-        >
-          Add Eligibility
-        </Button>
       </div>
 
       {data.length === 0 ? (
@@ -59,7 +58,8 @@ export const Section4Eligibility: React.FC<Section4EligibilityProps> = ({ data, 
             No Civil Service Eligibility Listed
           </p>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 mb-4">
-            If you have passed Civil Service Exams or PRC Board Exams, add them here.
+            If you have passed Civil Service Exams or PRC Board Exams, add them
+            here.
           </p>
           <Button type="button" variant="primary" size="sm" onClick={addRow}>
             Add First Entry
@@ -91,12 +91,19 @@ export const Section4Eligibility: React.FC<Section4EligibilityProps> = ({ data, 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                 <div className="md:col-span-2">
                   <label className="block text-[11px] font-medium text-slate-700 dark:text-slate-300 mb-1">
-                    Career Service / RA 1080 / Special Law / CES / Barangay Eligibility
+                    Career Service / RA 1080 / Special Law / CES / Barangay
+                    Eligibility
                   </label>
                   <input
                     type="text"
                     value={item.careerServiceRA1080OrSpecialLaw}
-                    onChange={(e) => updateRow(idx, 'careerServiceRA1080OrSpecialLaw', e.target.value)}
+                    onChange={(e) =>
+                      updateRow(
+                        idx,
+                        "careerServiceRA1080OrSpecialLaw",
+                        e.target.value,
+                      )
+                    }
                     placeholder="e.g. CAREER SERVICE PROFESSIONAL / RA 1080 (CPA/RN)"
                     className="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 px-3 py-1.5 text-sm text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-teal-500/50"
                   />
@@ -109,7 +116,7 @@ export const Section4Eligibility: React.FC<Section4EligibilityProps> = ({ data, 
                   <input
                     type="text"
                     value={item.rating}
-                    onChange={(e) => updateRow(idx, 'rating', e.target.value)}
+                    onChange={(e) => updateRow(idx, "rating", e.target.value)}
                     placeholder="e.g. 85.60% (or N/A)"
                     className="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 px-3 py-1.5 text-sm text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-teal-500/50"
                   />
@@ -121,7 +128,9 @@ export const Section4Eligibility: React.FC<Section4EligibilityProps> = ({ data, 
                   <DateInput
                     label="Date of Exam / Conferment"
                     value={item.dateOfExamConferment}
-                    onChange={(val) => updateRow(idx, 'dateOfExamConferment', val)}
+                    onChange={(val) =>
+                      updateRow(idx, "dateOfExamConferment", val)
+                    }
                   />
                 </div>
 
@@ -132,7 +141,9 @@ export const Section4Eligibility: React.FC<Section4EligibilityProps> = ({ data, 
                   <input
                     type="text"
                     value={item.placeOfExamConferment}
-                    onChange={(e) => updateRow(idx, 'placeOfExamConferment', e.target.value)}
+                    onChange={(e) =>
+                      updateRow(idx, "placeOfExamConferment", e.target.value)
+                    }
                     placeholder="e.g. CSC NCR / Manila"
                     className="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 px-3 py-2 text-sm text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-teal-500/50"
                   />
@@ -145,7 +156,9 @@ export const Section4Eligibility: React.FC<Section4EligibilityProps> = ({ data, 
                   <input
                     type="text"
                     value={item.licenseNumber}
-                    onChange={(e) => updateRow(idx, 'licenseNumber', e.target.value)}
+                    onChange={(e) =>
+                      updateRow(idx, "licenseNumber", e.target.value)
+                    }
                     placeholder="e.g. 0123456"
                     className="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 px-3 py-2 text-sm text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-teal-500/50"
                   />
@@ -155,7 +168,9 @@ export const Section4Eligibility: React.FC<Section4EligibilityProps> = ({ data, 
                   <DateInput
                     label="License Validity Date"
                     value={item.licenseValidityDate}
-                    onChange={(val) => updateRow(idx, 'licenseValidityDate', val)}
+                    onChange={(val) =>
+                      updateRow(idx, "licenseValidityDate", val)
+                    }
                   />
                 </div>
               </div>
@@ -163,6 +178,16 @@ export const Section4Eligibility: React.FC<Section4EligibilityProps> = ({ data, 
           ))}
         </div>
       )}
+
+      <Button
+        type="button"
+        variant="outline"
+        size="sm"
+        icon={<Plus className="w-3.5 h-3.5" />}
+        onClick={addRow}
+      >
+        Add Eligibility
+      </Button>
     </div>
   );
 };
