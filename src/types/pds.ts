@@ -123,6 +123,7 @@ export interface WorkExperienceItem {
   id: string;
   inclusiveDatesFrom: string; // dd/mm/yyyy
   inclusiveDatesTo: string;   // dd/mm/yyyy or 'Present'
+  isPresent: boolean; // true if currently holding this position
   positionTitle: string;
   departmentAgencyOfficeCompany: string;
   monthlySalary: string;

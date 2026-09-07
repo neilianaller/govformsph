@@ -4,6 +4,7 @@ import { PdsRecord } from '../../types/pds';
 import { X, ExternalLink } from 'lucide-react';
 import { Button } from '../../components/common/Button';
 import { openPdsPage1PdfInNewTab } from '../../utils/exportImport';
+import { parseDMYDate } from '../../pdfExport/exportPdsPage1';
 
 interface PdsPrintPreviewProps {
   record: PdsRecord;
@@ -557,10 +558,17 @@ export const PdsPrintPreview: React.FC<PdsPrintPreviewProps> = ({ record, onClos
                   </tr>
                 ))
               ) : (
-                record.workExperience.map((w, idx) => (
+                [...record.workExperience]
+                  .sort((a, b) => {
+                    if (a.isPresent !== b.isPresent) return a.isPresent ? -1 : 1;
+                    const aDate = parseDMYDate(a.inclusiveDatesTo) || parseDMYDate(a.inclusiveDatesFrom);
+                    const bDate = parseDMYDate(b.inclusiveDatesTo) || parseDMYDate(b.inclusiveDatesFrom);
+                    return bDate - aDate;
+                  })
+                  .map((w, idx) => (
                   <tr key={idx} className="border-b border-black">
                     <td className="border-r border-black p-1 font-mono">{v(w.inclusiveDatesFrom)}</td>
-                    <td className="border-r border-black p-1 font-mono">{v(w.inclusiveDatesTo)}</td>
+                    <td className="border-r border-black p-1 font-mono">{w.isPresent ? 'PRESENT' : v(w.inclusiveDatesTo)}</td>
                     <td className="border-r border-black p-1.5 text-left font-medium">{v(w.positionTitle)}</td>
                     <td className="border-r border-black p-1.5 text-left">{v(w.departmentAgencyOfficeCompany)}</td>
                     <td className="border-r border-black p-1">{w.monthlySalary ? `₱${w.monthlySalary}` : '—'}</td>

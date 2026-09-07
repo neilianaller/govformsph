@@ -34,6 +34,12 @@ export const Section5WorkExperience: React.FC<Section5WorkExperienceProps> = ({
     onChange(list);
   };
 
+  const updateRows = (index: number, patch: Partial<WorkExperienceItem>) => {
+    const list = [...data];
+    list[index] = { ...list[index], ...patch };
+    onChange(list);
+  };
+
   return (
     <div className="space-y-6">
       <div className="border-b border-border-light dark:border-border-dark pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
@@ -137,10 +143,23 @@ export const Section5WorkExperience: React.FC<Section5WorkExperienceProps> = ({
                 <div>
                   <DateInput
                     label="Inclusive Date: To"
-                    value={item.inclusiveDatesTo}
+                    value={item.isPresent ? "" : item.inclusiveDatesTo}
                     onChange={(val) => updateRow(idx, "inclusiveDatesTo", val)}
-                    placeholder="DD/MM/YYYY or PRESENT"
+                    placeholder="DD/MM/YYYY"
+                    disabled={item.isPresent}
                   />
+                  <label className="mt-1.5 flex items-center gap-1.5 text-[11px] font-medium text-slate-700 dark:text-slate-300 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={item.isPresent}
+                      onChange={(e) => {
+                        const isPresent = e.target.checked;
+                        updateRows(idx, isPresent ? { isPresent, inclusiveDatesTo: "" } : { isPresent });
+                      }}
+                      className="rounded border-slate-300 dark:border-slate-700 text-teal-600 focus:ring-teal-500/50"
+                    />
+                    Present (currently holds this position)
+                  </label>
                 </div>
 
                 <div>

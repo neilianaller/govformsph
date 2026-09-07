@@ -73,6 +73,20 @@ export function fillAutoSizedTextField(
  * - Address sub-fields with underscore or dot (e.g. 'residentialAddress_houseBlockLot')
  * - Family background / Education / Top-level properties
  */
+/** Parses a strict dd/mm/yyyy string to epoch ms; returns 0 for blank/invalid/out-of-range dates. */
+export function parseDMYDate(value: string | undefined): number {
+  if (!value) return 0;
+  const match = value.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+  if (!match) return 0;
+  const day = Number(match[1]);
+  const month = Number(match[2]) - 1;
+  const year = Number(match[3]);
+  const date = new Date(Date.UTC(year, month, day));
+  return date.getUTCFullYear() === year && date.getUTCMonth() === month && date.getUTCDate() === day
+    ? date.getTime()
+    : 0;
+}
+
 export function getRecordValueByKey(record: PdsRecord, key: string): any {
   if (!record) return '';
 
@@ -174,26 +188,16 @@ export function getRecordValueByKey(record: PdsRecord, key: string): any {
     /^workExperience_(\d{2})_(inclusiveDatesFrom|inclusiveDatesTo|positionTitle|departmentAgencyOfficeCompany|monthlySalary|salaryJobPayGradeStepIncrement|statusOfAppointment|isGovernmentService)$/
   );
   if (workExperienceMatch) {
-    const parseWorkDate = (value: string | undefined): number => {
-      if (!value) return 0;
-      const match = value.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
-      if (!match) return 0;
-      const day = Number(match[1]);
-      const month = Number(match[2]) - 1;
-      const year = Number(match[3]);
-      const date = new Date(Date.UTC(year, month, day));
-      return date.getUTCFullYear() === year && date.getUTCMonth() === month && date.getUTCDate() === day
-        ? date.getTime()
-        : 0;
-    };
     const sortedWorkExperience = [...(record.workExperience ?? [])].sort((first, second) => {
-      const firstDate = parseWorkDate(first.inclusiveDatesTo) || parseWorkDate(first.inclusiveDatesFrom);
-      const secondDate = parseWorkDate(second.inclusiveDatesTo) || parseWorkDate(second.inclusiveDatesFrom);
+      if (first.isPresent !== second.isPresent) return first.isPresent ? -1 : 1;
+      const firstDate = parseDMYDate(first.inclusiveDatesTo) || parseDMYDate(first.inclusiveDatesFrom);
+      const secondDate = parseDMYDate(second.inclusiveDatesTo) || parseDMYDate(second.inclusiveDatesFrom);
       return secondDate - firstDate;
     });
     const entry = sortedWorkExperience[parseInt(workExperienceMatch[1], 10) - 1];
     if (!entry) return '';
     const subKey = workExperienceMatch[2];
+    if (subKey === 'inclusiveDatesTo' && entry.isPresent) return 'PRESENT';
     if (subKey === 'isGovernmentService') {
       const isGov = (entry as any)[subKey];
       return isGov === true ? 'Y' : isGov === false ? 'N' : '';
@@ -206,7 +210,12 @@ export function getRecordValueByKey(record: PdsRecord, key: string): any {
     /^trainings_(\d{2})_(title|inclusiveDatesFrom|inclusiveDatesTo|numberOfHours|typeOfLD|conductedSponsoredBy)$/
   );
   if (trainingMatch) {
-    const entry = record.trainings?.[parseInt(trainingMatch[1], 10) - 1];
+    const sortedTrainings = [...(record.trainings ?? [])].sort((first, second) => {
+      const firstDate = parseDMYDate(first.inclusiveDatesTo) || parseDMYDate(first.inclusiveDatesFrom);
+      const secondDate = parseDMYDate(second.inclusiveDatesTo) || parseDMYDate(second.inclusiveDatesFrom);
+      return secondDate - firstDate;
+    });
+    const entry = sortedTrainings[parseInt(trainingMatch[1], 10) - 1];
     return entry ? (entry as any)[trainingMatch[2]] ?? '' : '';
   }
 
